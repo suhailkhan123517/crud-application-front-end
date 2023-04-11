@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-export default function Register() {
+export default function Register({ setUserList }) {
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -26,7 +26,16 @@ export default function Register() {
     if (name && email && age && mobile && work && add && desc) {
       axios
         .post("http://localhost:9002/register", user)
-        .then((res) => console.log(res));
+        .then((res) => setUserList(res.data));
+      setUser({
+        name: "",
+        email: "",
+        age: "",
+        mobile: "",
+        work: "",
+        add: "",
+        desc: "",
+      });
       alert("posted");
     } else {
       alert("invalid input");
@@ -35,7 +44,6 @@ export default function Register() {
 
   return (
     <>
-      {console.log("user", user)}
       <div className="container">
         <div className="row">
           <div className="col-12">

@@ -1,7 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function Home() {
+export default function Home({ userList, deleteUserList, setUserList }) {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="mt-5">
@@ -11,7 +14,7 @@ export default function Home() {
               Add Data
             </NavLink>
           </div>
-          <table class="table">
+          <table className="table">
             <thead>
               <tr className="table-dark">
                 <th scope="col">id</th>
@@ -23,24 +26,32 @@ export default function Home() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>meet</td>
-                <td>meet@email.com</td>
-                <td>webdeveloper</td>
-                <td>1234567890</td>
-                <td className="d-flex justify-content-between">
-                  <button className="btn btn-success">
-                    <i class="fa-solid fa-eye"></i>
-                  </button>
-                  <button className="btn btn-primary">
-                    <i class="fa-solid fa-pen"></i>
-                  </button>
-                  <button className="btn btn-danger">
-                    <i class="fa-sharp fa-solid fa-trash"></i>
-                  </button>
-                </td>
-              </tr>
+              {userList.map((item) => (
+                <tr key={item._id}>
+                  <th scope="row">{item._id}</th>
+                  <td>{item.name}</td>
+                  <td>{item.email}</td>
+                  <td>{item.work}</td>
+                  <td>{item.mobile}</td>
+                  <td className="d-flex justify-content-between">
+                    <button
+                      onClick={() => navigate("/details")}
+                      className="btn btn-success"
+                    >
+                      <i className="fa-solid fa-eye"></i>
+                    </button>
+                    <button className="btn btn-primary">
+                      <i className="fa-solid fa-pen"></i>
+                    </button>
+                    <button
+                      onClick={() => deleteUserList(item._id)}
+                      className="btn btn-danger"
+                    >
+                      <i className="fa-sharp fa-solid fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
