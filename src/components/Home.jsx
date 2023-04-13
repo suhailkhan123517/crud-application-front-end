@@ -5,6 +5,19 @@ import { useNavigate } from "react-router-dom";
 export default function Home({ userList, deleteUserList, setUserList }) {
   const navigate = useNavigate();
 
+  const setDate = (item) => {
+    const { _id, name, email, work, age, desc, add, mobile } = item;
+
+    localStorage.setItem("id", _id);
+    localStorage.setItem("name", name);
+    localStorage.setItem("email", email);
+    localStorage.setItem("work", work);
+    localStorage.setItem("age", age);
+    localStorage.setItem("desc", desc);
+    localStorage.setItem("add", add);
+    localStorage.setItem("mobile", mobile);
+  };
+
   return (
     <>
       <div className="mt-5">
@@ -40,8 +53,13 @@ export default function Home({ userList, deleteUserList, setUserList }) {
                     >
                       <i className="fa-solid fa-eye"></i>
                     </button>
-                    <button className="btn btn-primary">
-                      <i className="fa-solid fa-pen"></i>
+                    <button
+                      onClick={() => setDate(item)}
+                      className="btn btn-primary"
+                    >
+                      <NavLink to="/edit">
+                        <i className="fa-solid fa-pen"></i>
+                      </NavLink>
                     </button>
                     <button
                       onClick={() => deleteUserList(item._id)}

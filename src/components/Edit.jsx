@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Edit() {
   const [user, setUser] = useState({
@@ -11,12 +12,44 @@ export default function Edit() {
     desc: "",
   });
 
-  const setdata = (e) => {
-    const { name, value } = e.target;
-    setUser({
-      ...user,
-      [name]: value,
+  // const setdata = (e) => {
+  //   const { name, value } = e.target;
+  //   setUser({
+  //     ...user,
+  //     [name]: value,
+  //   });
+  // };
+
+  const [id, setId] = useState(null);
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [age, setAge] = useState(null);
+  const [mobile, setMobile] = useState(null);
+  const [work, setWork] = useState(null);
+  const [add, setAdd] = useState(null);
+  const [desc, setDesc] = useState(null);
+  useEffect(() => {
+    setId(localStorage.getItem("id"));
+    setName(localStorage.getItem("name"));
+    setEmail(localStorage.getItem("email"));
+    setAge(localStorage.getItem("age"));
+    setMobile(localStorage.getItem("mobile"));
+    setWork(localStorage.getItem("work"));
+    setAdd(localStorage.getItem("add"));
+    setDesc(localStorage.getItem("desc"));
+  }, []);
+
+  const udate = (e) => {
+    axios.put(`http://localhost:9002/update ${id}`, {
+      name,
+      email,
+      age,
+      work,
+      add,
+      desc,
+      mobile,
     });
+    e.preventDefault();
   };
 
   return (
@@ -43,8 +76,8 @@ export default function Edit() {
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                   name="name"
-                  value={user.name}
-                  onChange={setdata}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
             </div>
@@ -58,8 +91,8 @@ export default function Edit() {
                   className="form-control"
                   id="exampleInputPassword1"
                   name="email"
-                  value={user.email}
-                  onChange={setdata}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
@@ -74,8 +107,8 @@ export default function Edit() {
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                   name="age"
-                  value={user.age}
-                  onChange={setdata}
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
                 />
               </div>
             </div>
@@ -90,8 +123,8 @@ export default function Edit() {
                   className="form-control"
                   id="exampleInputPassword1"
                   name="mobile"
-                  value={user.mobile}
-                  onChange={setdata}
+                  value={mobile}
+                  onChange={(e) => setMobile(e.target.value)}
                 />
               </div>
             </div>
@@ -106,8 +139,8 @@ export default function Edit() {
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                   name="work"
-                  value={user.work}
-                  onChange={setdata}
+                  value={work}
+                  onChange={(e) => setWork(e.target.value)}
                 />
               </div>
             </div>
@@ -121,8 +154,8 @@ export default function Edit() {
                   className="form-control"
                   id="exampleInputPassword1"
                   name="add"
-                  value={user.add}
-                  onChange={setdata}
+                  value={add}
+                  onChange={(e) => setAdd(e.target.value)}
                 />
               </div>
             </div>
@@ -139,11 +172,15 @@ export default function Edit() {
                   id="exampleFormControlTextarea1"
                   rows="3"
                   name="desc"
-                  value={user.desc}
-                  onChange={setdata}
+                  value={desc}
+                  onChange={(e) => setDesc(e.target.value)}
                 ></textarea>
-                <button type="submit" className="btn mt-3 w-100 btn-primary">
-                  Submit
+                <button
+                  type="submit"
+                  onClick={udate}
+                  className="btn mt-3 w-100 btn-primary"
+                >
+                  Update
                 </button>
               </div>
             </div>
